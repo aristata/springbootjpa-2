@@ -3,6 +3,8 @@ package kr.co.aristatait.springbootjpa1.api;
 import jakarta.validation.Valid;
 import kr.co.aristatait.springbootjpa1.domain.Address;
 import kr.co.aristatait.springbootjpa1.domain.Member;
+import kr.co.aristatait.springbootjpa1.dto.CreateMemberRequest;
+import kr.co.aristatait.springbootjpa1.dto.CreateMemberResponse;
 import kr.co.aristatait.springbootjpa1.service.MemberService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -30,26 +32,9 @@ public class MemberApiController {
     ) {
         Member member = new Member();
         member.setName(request.getName());
-        member.setAddress(new Address(request.city, request.street, request.zipcode));
+        member.setAddress(new Address(request.getCity(), request.getStreet(), request.getZipcode()));
 
         Long id = memberService.join(member);
         return new CreateMemberResponse(id);
-    }
-
-    @Data
-    static class CreateMemberResponse {
-        private Long id;
-
-        public CreateMemberResponse(Long id) {
-            this.id = id;
-        }
-    }
-
-    @Data
-    static class CreateMemberRequest {
-        private String name;
-        private String city;
-        private String street;
-        private String zipcode;
     }
 }
