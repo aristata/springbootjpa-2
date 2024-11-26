@@ -1,13 +1,12 @@
 package kr.co.aristatait.springbootjpa1.service;
 
-import kr.co.aristatait.springbootjpa1.domain.Member;
-import kr.co.aristatait.springbootjpa1.repository.MemberRepository;
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import java.util.List;
+import kr.co.aristatait.springbootjpa1.domain.*;
+import kr.co.aristatait.springbootjpa1.repository.*;
+import lombok.*;
+import org.springframework.stereotype.*;
+import org.springframework.transaction.annotation.*;
+
+import java.util.*;
 
 @Service
 @Transactional(readOnly = true)
@@ -88,4 +87,15 @@ public class MemberService {
     }
 
 
+    /**
+     * 회원 수정
+     *
+     * @param memberId Long 타입의 회원 아이디,
+     * @param name     회원 이름
+     */
+    @Transactional
+    public void update(Long memberId, String name) {
+        Member member = memberRepository.findOne(memberId);
+        member.setName(name);
+    }
 }

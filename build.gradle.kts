@@ -50,7 +50,6 @@ dependencies {
 
     // Mariadb
     implementation("org.mariadb.jdbc:mariadb-java-client:3.5.0")
-
 }
 
 tasks.withType<Test> {

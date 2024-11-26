@@ -1,16 +1,11 @@
 package kr.co.aristatait.springbootjpa1.api;
 
-import jakarta.validation.Valid;
-import kr.co.aristatait.springbootjpa1.domain.Address;
-import kr.co.aristatait.springbootjpa1.domain.Member;
-import kr.co.aristatait.springbootjpa1.dto.CreateMemberRequest;
-import kr.co.aristatait.springbootjpa1.dto.CreateMemberResponse;
-import kr.co.aristatait.springbootjpa1.service.MemberService;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.*;
+import kr.co.aristatait.springbootjpa1.domain.*;
+import kr.co.aristatait.springbootjpa1.dto.*;
+import kr.co.aristatait.springbootjpa1.service.*;
+import lombok.*;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -36,5 +31,17 @@ public class MemberApiController {
 
         Long id = memberService.join(member);
         return new CreateMemberResponse(id);
+    }
+
+    @PutMapping("/api/v2/members/{memberId}")
+    public UpdateMemberResponse putMember(
+            @RequestBody @Valid UpdateMemberRequest request,
+            @PathVariable Long memberId
+    ) {
+
+        // 커맨드(등록,수정,삭제)와 쿼리(조회)를 분리한다 는 원칙
+        memberService.update(memberId, request.getName());
+        Member foundMember = memberService.findOne(memberId);
+        return new UpdateMemberResponse(foundMember.getId(), foundMember.getName());
     }
 }
