@@ -1,4 +1,4 @@
-package kr.co.aristatait.springbootjpa1.dto;
+package kr.co.aristatait.springbootjpa1.dto.members;
 
 import lombok.*;
 

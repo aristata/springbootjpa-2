@@ -1,8 +1,7 @@
-package kr.co.aristatait.springbootjpa1.dto;
+package kr.co.aristatait.springbootjpa1.dto.members;
 
-import jakarta.validation.constraints.NotEmpty;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.validation.constraints.*;
+import lombok.*;
 
 @Getter
 @Setter

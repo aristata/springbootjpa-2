@@ -1,18 +1,16 @@
 package kr.co.aristatait.springbootjpa1.controller;
 
-import jakarta.validation.Valid;
-import kr.co.aristatait.springbootjpa1.domain.Address;
-import kr.co.aristatait.springbootjpa1.domain.Member;
-import kr.co.aristatait.springbootjpa1.dto.MemberForm;
-import kr.co.aristatait.springbootjpa1.service.MemberService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import jakarta.validation.*;
+import kr.co.aristatait.springbootjpa1.domain.*;
+import kr.co.aristatait.springbootjpa1.dto.members.*;
+import kr.co.aristatait.springbootjpa1.service.*;
+import lombok.*;
+import org.springframework.stereotype.*;
+import org.springframework.ui.*;
+import org.springframework.validation.*;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequiredArgsConstructor
