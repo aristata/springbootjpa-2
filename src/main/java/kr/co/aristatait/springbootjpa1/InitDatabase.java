@@ -1,8 +1,8 @@
 package kr.co.aristatait.springbootjpa1;
 
-import kr.co.aristatait.springbootjpa1.service.*;
-import lombok.*;
-import org.springframework.stereotype.*;
+import kr.co.aristatait.springbootjpa1.service.InitService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
