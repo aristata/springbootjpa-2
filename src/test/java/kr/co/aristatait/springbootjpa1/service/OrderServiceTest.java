@@ -7,7 +7,7 @@ import kr.co.aristatait.springbootjpa1.domain.Order;
 import kr.co.aristatait.springbootjpa1.domain.OrderStatus;
 import kr.co.aristatait.springbootjpa1.domain.item.Book;
 import kr.co.aristatait.springbootjpa1.domain.item.Item;
-import kr.co.aristatait.springbootjpa1.dto.OrderSearch;
+import kr.co.aristatait.springbootjpa1.dto.orders.OrderSearch;
 import kr.co.aristatait.springbootjpa1.exception.NotEnoughStockException;
 import kr.co.aristatait.springbootjpa1.repository.OrderRepository;
 import org.junit.jupiter.api.Assertions;

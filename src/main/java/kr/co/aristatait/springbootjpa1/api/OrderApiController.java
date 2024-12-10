@@ -1,7 +1,7 @@
 package kr.co.aristatait.springbootjpa1.api;
 
 import kr.co.aristatait.springbootjpa1.domain.Order;
-import kr.co.aristatait.springbootjpa1.dto.OrderSearch;
+import kr.co.aristatait.springbootjpa1.dto.orders.OrderSearch;
 import kr.co.aristatait.springbootjpa1.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

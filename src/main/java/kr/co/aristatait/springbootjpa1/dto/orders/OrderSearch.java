@@ -1,4 +1,4 @@
-package kr.co.aristatait.springbootjpa1.dto;
+package kr.co.aristatait.springbootjpa1.dto.orders;
 
 import kr.co.aristatait.springbootjpa1.domain.OrderStatus;
 import lombok.Getter;
