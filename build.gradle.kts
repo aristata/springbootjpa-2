@@ -40,7 +40,9 @@ dependencies {
     }
 
     // p6spy
-    implementation("com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.2")
+//    implementation("com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.2")
+    implementation("p6spy:p6spy:3.9.1")
+    implementation("com.github.gavlyukovskiy:datasource-decorator-spring-boot-autoconfigure:1.9.2")
 
     // QueryDSL
     implementation("com.querydsl:querydsl-jpa:5.0.0:jakarta")
