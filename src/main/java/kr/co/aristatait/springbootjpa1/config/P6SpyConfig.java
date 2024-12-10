@@ -47,9 +47,10 @@ public class P6SpyConfig implements MessageFormattingStrategy {
     @Override
     public String formatMessage(int connectionId, String now, long elapsed, String category, String prepared, String sql, String url) {
         return String.format(
-                "[Category: %s] | Execution Time: %d ms | Connection ID: %d | Formatted SQL:\n%s",
+                             "[Category: %s] | Execution Time: %d ms | Connection ID: %d | SQL:%s\n",
                 category, elapsed, connectionId, formatSql(category, sql)
-        );
+                     )
+                     .trim() + "\n";
     }
 
     private String formatSql(String category, String sql) {
@@ -65,33 +66,17 @@ public class P6SpyConfig implements MessageFormattingStrategy {
                 sql = FormatStyle.BASIC.getFormatter()
                                        .format(sql);
             }
-            return alignSql(sql);
+            // 포맷팅 후 ANSI 색상 적용
+            return applyAnsiColors(sql);
         }
         return sql == null ? "" : sql.trim();
     }
 
-    private String alignSql(String sql) {
-        String[] lines = sql.split("\n");
-        StringBuilder alignedSql = new StringBuilder();
-
-        for (String line : lines) {
-            String trimmedLine = line.trim();
-            if (isSqlKeyword(trimmedLine)) {
-                alignedSql.append(trimmedLine.toUpperCase())
-                          .append("\n"); // 키워드는 그대로 출력
-            } else {
-                alignedSql.append("    ")
-                          .append(trimmedLine)
-                          .append("\n"); // 비키워드는 4칸 들여쓰기
-            }
+    private String applyAnsiColors(String sql) {
+        for (String keyword : SQL_KEYWORDS) {
+            sql = sql.replaceAll("(?i)\\b" + keyword + "\\b", "\u001B[34m" + keyword + "\u001B[0m");
         }
-        return alignedSql.toString()
-                         .trim();
+        return sql;
     }
 
-    private boolean isSqlKeyword(String line) {
-        // 한 줄의 시작 단어가 SQL 키워드인지 확인
-        String firstWord = line.split("\\s+")[0].toUpperCase(Locale.ROOT);
-        return SQL_KEYWORDS.contains(firstWord);
-    }
 }
