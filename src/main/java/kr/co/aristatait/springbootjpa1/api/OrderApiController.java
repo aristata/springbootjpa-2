@@ -65,4 +65,16 @@ public class OrderApiController {
         // 1 + N -> N + 1 문제라고 표현
         return result;
     }
+
+    /**
+     * N+1 문제를 해결하기 위해 페치 조인(fetch join) 을 사용한다
+     * 페치 조인을 사용하면 레이지 로딩에 관계 없이 딱 한번의 쿼리만 발생한다
+     */
+    @GetMapping("/v3/simple-orders")
+    public List<SimpleOrderDto> ordersV3() {
+        return orderRepository.findAllWithMemberDelivery()
+                              .stream()
+                              .map(SimpleOrderDto::new)
+                              .toList();
+    }
 }
