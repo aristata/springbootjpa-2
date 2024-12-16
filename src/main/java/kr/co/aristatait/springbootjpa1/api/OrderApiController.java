@@ -3,7 +3,9 @@ package kr.co.aristatait.springbootjpa1.api;
 import kr.co.aristatait.springbootjpa1.domain.Order;
 import kr.co.aristatait.springbootjpa1.dto.orders.OrderSearch;
 import kr.co.aristatait.springbootjpa1.dto.orders.SimpleOrderDto;
-import kr.co.aristatait.springbootjpa1.repository.OrderRepository;
+import kr.co.aristatait.springbootjpa1.dto.orders.SimpleOrderQueryDto;
+import kr.co.aristatait.springbootjpa1.repository.orders.OrderCustomRepository;
+import kr.co.aristatait.springbootjpa1.repository.orders.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +19,7 @@ import java.util.List;
 public class OrderApiController {
 
     private final OrderRepository orderRepository;
+    private final OrderCustomRepository orderCustomRepository;
 
     /**
      * xToOne(ManyToOne, OneToOne)
@@ -77,4 +80,25 @@ public class OrderApiController {
                               .map(SimpleOrderDto::new)
                               .toList();
     }
+
+    /**
+     * DTO 를 변환하는 과정을 생략해보자
+     * 장단점이 있다
+     * - 장점: 원하는 데이터만 선택해서 가져올 수 있다
+     * 성능 최적화
+     * - 단점: 재사용성이 떨어진다
+     * 코드가 지저분하다
+     */
+    @GetMapping("/v4/simple-orders")
+    public List<SimpleOrderQueryDto> ordersV4() {
+        return orderCustomRepository.findAllWithDto();
+    }
+
+    /*
+      쿼리 방식 선택 권장 순서
+      1. 우선 엔티티를 DTO 로 변환하는 방법을 선택한다 (v2)
+      2. 필요하면 페치 조인으로 성능을 최적화 한다 (v3)
+      3. 그래도 안되면 DTO 로 직접 조회하는 방법을 사용한다 (v4)
+      4. 최후의 방법은 JPA 가 제공하는 네이티브 SQL 이나 스프링 JDBC Template 을 사용해서 SQL을 직접 사용한다
+     */
 }

@@ -1,4 +1,4 @@
-package kr.co.aristatait.springbootjpa1.repository;
+package kr.co.aristatait.springbootjpa1.repository.orders;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -98,15 +98,12 @@ public class OrderRepository {
         List<Predicate> criteria = new ArrayList<>();
         //주문 상태 검색
         if (orderSearch.getOrderStatus() != null) {
-            Predicate status = cb.equal(o.get("status"),
-                    orderSearch.getOrderStatus());
+            Predicate status = cb.equal(o.get("status"), orderSearch.getOrderStatus());
             criteria.add(status);
         }
         //회원 이름 검색
         if (StringUtils.hasText(orderSearch.getMemberName())) {
-            Predicate name =
-                    cb.like(m.<String>get("name"), "%" + orderSearch.getMemberName()
-                            + "%");
+            Predicate name = cb.like(m.get("name"), "%" + orderSearch.getMemberName() + "%");
             criteria.add(name);
         }
         cq.where(cb.and(criteria.toArray(new Predicate[criteria.size()])));
@@ -128,13 +125,12 @@ public class OrderRepository {
         QOrder order = QOrder.order;
         QMember member = QMember.member;
 
-        return query
-                .select(order)
-                .from(order)
-                .join(order.member, member)
-                .where(statusEq(orderSearch.getOrderStatus()), nameLike(orderSearch.getMemberName()))
-                .limit(1000)
-                .fetch();
+        return query.select(order)
+                    .from(order)
+                    .join(order.member, member)
+                    .where(statusEq(orderSearch.getOrderStatus()), nameLike(orderSearch.getMemberName()))
+                    .limit(1000)
+                    .fetch();
     }
 
 
@@ -155,12 +151,7 @@ public class OrderRepository {
     }
 
     public List<Order> findAllWithMemberDelivery() {
-        return em.createQuery(
-                         "select o from Order o" +
-                                 " join fetch o.member m" +
-                                 " join fetch o.delivery d"
-                         , Order.class
-                 )
+        return em.createQuery("select o from Order o" + " join fetch o.member m" + " join fetch o.delivery d", Order.class)
                  .getResultList();
     }
 }

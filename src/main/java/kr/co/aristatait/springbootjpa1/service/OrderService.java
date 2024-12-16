@@ -8,7 +8,7 @@ import kr.co.aristatait.springbootjpa1.domain.item.Item;
 import kr.co.aristatait.springbootjpa1.dto.orders.OrderSearch;
 import kr.co.aristatait.springbootjpa1.repository.ItemRepository;
 import kr.co.aristatait.springbootjpa1.repository.MemberRepository;
-import kr.co.aristatait.springbootjpa1.repository.OrderRepository;
+import kr.co.aristatait.springbootjpa1.repository.orders.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
