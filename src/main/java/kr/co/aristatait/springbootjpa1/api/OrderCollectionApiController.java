@@ -2,6 +2,7 @@ package kr.co.aristatait.springbootjpa1.api;
 
 import kr.co.aristatait.springbootjpa1.domain.Order;
 import kr.co.aristatait.springbootjpa1.domain.OrderItem;
+import kr.co.aristatait.springbootjpa1.dto.orders.OrderCollectionDto;
 import kr.co.aristatait.springbootjpa1.dto.orders.OrderSearch;
 import kr.co.aristatait.springbootjpa1.repository.orders.OrderRepository;
 import lombok.RequiredArgsConstructor;
@@ -41,5 +42,18 @@ public class OrderCollectionApiController {
                                                      .getName());
         }
         return all;
+    }
+
+    /**
+     * v2 엔티티 대신 DTO 로 변환
+     * - orderItem 까지 DTO 로 작성해 줘야 함
+     * - n + 1 문제 때문에 너무 많은 SQL 이 발생하는 단점이 있음
+     */
+    @GetMapping("/v2/collection-orders")
+    public List<OrderCollectionDto> ordersV2() {
+        return orderRepository.findAllByString(new OrderSearch())
+                              .stream()
+                              .map(OrderCollectionDto::new)
+                              .toList();
     }
 }
