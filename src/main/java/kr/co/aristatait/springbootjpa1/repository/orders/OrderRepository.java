@@ -150,8 +150,26 @@ public class OrderRepository {
         return member.name.like(name);
     }
 
-    public List<Order> findAllWithMemberDelivery() {
+    /**
+     * 페치 조인 최적화
+     */
+    public List<Order> findAllWithMemberAndDelivery() {
         return em.createQuery("select o from Order o" + " join fetch o.member m" + " join fetch o.delivery d", Order.class)
+                 .getResultList();
+    }
+
+    /**
+     * 컬렉션 페치 조인 최적화
+     */
+    public List<Order> findAllWithMemberAndDeliveryAndOderItems() {
+        return em.createQuery("""
+                                    select distinct o
+                                    from Order o
+                                    join fetch o.member m
+                                    join fetch o.delivery d
+                                    join fetch o.orderItems oi
+                                    join fetch oi.item i
+                              """, Order.class)
                  .getResultList();
     }
 }
