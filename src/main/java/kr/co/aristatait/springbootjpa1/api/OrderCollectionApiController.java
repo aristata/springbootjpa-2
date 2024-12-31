@@ -8,6 +8,7 @@ import kr.co.aristatait.springbootjpa1.repository.orders.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -75,5 +76,24 @@ public class OrderCollectionApiController {
                               .stream()
                               .map(OrderCollectionDto::new)
                               .toList();
+    }
+
+    /**
+     * v3.1 컬렉션 페치 조인 한계 돌파
+     * 1. ToOne 관계는 모두 페치 조인 한다 = 데이터가 뻥튀기 되지 않으니까
+     * 2. 컬렉션은 지연로딩으로 조회한다
+     * 3. default_batch_fetch_size 속성을 사용한다 (애플리케이션 글로벌 적용)
+     * 만약 지역적으로 적용하고 싶은 경우에는 @BatchSize(size = 100) 애노테이션을 Entity 에 적용한다
+     * 컬랙션이 아닌 경우에는 엔티티 상단에 적용한다
+     */
+    @GetMapping("/v3.1/collection-orders")
+    public List<OrderCollectionDto> ordersV3WithPage(
+            @RequestParam(value = "offset", defaultValue = "0") int offset,
+            @RequestParam(value = "limit", defaultValue = "10") int limit
+    ) {
+        return orderRepository.findAllWithMemberAndDeliveryAndPaging(offset, limit)
+                .stream()
+                .map(OrderCollectionDto::new)
+                .toList();
     }
 }

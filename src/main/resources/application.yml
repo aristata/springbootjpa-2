@@ -14,6 +14,7 @@ spring:
       ddl-auto: none
     properties:
       hibernate:
+        default_batch_fetch_size: 100
   #        show_sql: true, system out 에 출력
   #        format_sql: true
   #        dialect: org.hibernate.dialect.MariaDBDialect
